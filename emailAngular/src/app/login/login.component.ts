@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-	constructor(private logInService: LoginService ) { }
+	constructor(private logInService: LoginService, private router: Router ) { }
 
 	userName: string = "";
 	password: string = "";
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+
 	login(){
 		this.userData = this.userName + "$" + this.password;
 		console.log(this.userData);
@@ -29,6 +31,9 @@ export class LoginComponent implements OnInit {
 			}else{
 				console.log('not in data base');
 			}
+
+			this.router.navigate(['/home']);
+
 		});
 	}
 	signUp(){
@@ -40,6 +45,9 @@ export class LoginComponent implements OnInit {
 			}else{
 				console.log('not in data base s');
 			}
+
+			this.router.navigate(['/home']);
+
 		});
 	}
 

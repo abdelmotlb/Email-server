@@ -1,1 +1,10 @@
-<p>in home page</p>
+<div>
+    <div class="toolBar">
+        <button type="button" class="inboxBut" (click)="gotoInbox()">inbox</button>
+        <button type="button" class="draftBut" (click)="gotoDraft()">draft</button>
+    </div>
+    <!-- <div class="search"></div> -->
+    <div class="dataContained">
+        <router-outlet></router-outlet>
+    </div>
+</div>

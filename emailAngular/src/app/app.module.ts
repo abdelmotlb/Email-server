@@ -6,13 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { InboxComponent } from './home-page/inbox/inbox.component';
+import { DraftComponent } from './home-page/draft/draft.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomePageComponent
+    HomePageComponent,
+    InboxComponent,
+    DraftComponent
   ],
   imports: [
     BrowserModule,
