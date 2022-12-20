@@ -3,17 +3,23 @@ package com.EmialBackEnd.EmialBackEnd;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+@org.springframework.stereotype.Service
+
 public class Service {
 
     public static List<User> all;
+    public static List<Message>  messages;
 
     // get an array of users in json
-    public static List<User> getJasonList(String fileName) {
+    public static  List<User> getJasonList(String fileName) {
         try {
             FileInputStream fip = new FileInputStream(fileName);
             ObjectMapper OM = new ObjectMapper();
@@ -21,6 +27,23 @@ public class Service {
             };
             List<User> all = (List<User>) OM.readValue(fip, tr);
             return all;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("can not get");
+            return null;
+        }
+    }
+
+    // get an array of Messages in json
+    public static  List<Message> getJasonMessageList(String userfolder, String typeOfFile) {
+        try {
+            FileInputStream fip = new FileInputStream("allUsersFolders/"+userfolder+"/"+userfolder+"_"+typeOfFile+".json");
+            ObjectMapper OM = new ObjectMapper();
+            TypeReference tr = new TypeReference<List<Message>>() {
+            };
+            List<Message> messages = (List<Message>) OM.readValue(fip, tr);
+            return messages;
 
         } catch (Exception e) {
             System.out.println(e);
@@ -76,4 +99,45 @@ public class Service {
             // TODO: handle exception
         }
     }
+    //Send a message to draft of the sender
+    public static String Draft(Message message){
+        try {
+            messages = getJasonMessageList(message.getFrom(),"draft");
+            messages.add(message);
+            ObjectMapper OM = new ObjectMapper();
+            FileOutputStream fos = new FileOutputStream("allUsersFolders/"+message.getFrom()+"/"+message.getFrom()+"_"+
+                                    "draft.json");
+            OM.writeValue(fos, messages);
+        } catch (Exception e) {
+            System.out.println("Error in Draft");
+        }
+        return "Draft";
+    }
+    public static String inboxOfTheReciever(Message message){
+        //if the the user who the message is sent to is available on the system then put the message in his inbox else say the user is not found
+        try {
+            messages = getJasonMessageList(message.getTo(),"inbox");
+            messages.add(message);
+            ObjectMapper OM = new ObjectMapper();
+            FileOutputStream fos = new FileOutputStream("allUsersFolders/"+message.getTo()+"/"+message.getTo()+"_"+
+                    "inbox.json");
+            OM.writeValue(fos, messages);
+        } catch (Exception e) {
+            System.out.println("Error in inboxOfTheReciever");
+        }
+        return "inboxOfTheReciever";
+    }
+    public static void sentOfTheSender(Message message){
+        try {
+            messages = getJasonMessageList(message.getFrom(),"sent");
+            messages.add(message);
+            ObjectMapper OM = new ObjectMapper();
+            FileOutputStream fos = new FileOutputStream("allUsersFolders/"+message.getFrom()+"/"+message.getFrom()+"_"+
+                    "sent.json");
+            OM.writeValue(fos, messages);
+        } catch (Exception e) {
+            System.out.println("Error in sentOfTheSender");
+        }
+    }
+
 }
