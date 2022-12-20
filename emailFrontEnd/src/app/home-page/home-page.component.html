@@ -1,10 +1,14 @@
 <div>
     <div class="toolBar">
-        <button type="button" class="inboxBut" (click)="gotoInbox()">inbox</button>
+        <button type="button" class="composeBut" (click)="appearCompose()"> compose </button>        <button type="button" class="inboxBut" (click)="gotoInbox()">inbox</button>
         <button type="button" class="draftBut" (click)="gotoDraft()">draft</button>
+        <button type="button" class="sentBut" (click)="gotoSent()">sent</button>
+        <button type="button" class="trashBut" (click)="gotoTrash()">trash</button>
     </div>
     <!-- <div class="search"></div> -->
     <div class="dataContained">
         <router-outlet></router-outlet>
     </div>
+
+
 </div>

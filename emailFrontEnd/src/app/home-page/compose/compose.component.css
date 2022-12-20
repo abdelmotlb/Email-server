@@ -1,0 +1,82 @@
+.head{
+    position: relative;
+    left: 20%;
+}
+
+.name{
+    position: relative;
+    top: 5%;
+    left: 0%;
+    font-size: x-large;
+}
+
+#name{
+    position: relative;
+    top: 5%;
+    left: 0%;
+    font-size: x-large;
+}
+
+.subject{
+    position: relative;
+    top: 10%;
+    left: 0%;
+    font-size: x-large;
+}
+
+#subject{
+    position: relative;
+    top: 10%;
+    left: 0%;
+    font-size: x-large;
+}
+
+.Content{
+    position: relative;
+    top: 15%;
+    left: 0%;
+    font-size: x-large;
+}
+
+#Content{
+    position: relative;
+    top: 15%;
+    left: 0%;
+    width: 90%;
+    height: 20%;
+    font-size: x-large;
+}
+
+#close{
+    position: relative;
+    left: 5%;
+    top: 15%;
+    border-radius: 20px;
+    color: aliceblue;
+    background-color: blueviolet;
+    width: 100px;
+    height: 30px;
+}
+
+#draft{
+    position: relative;
+    left: 10%;
+    top: 15%;
+    border-radius: 20px;
+    color: aliceblue;
+    background-color: blueviolet;
+    width: 100px;
+    height: 30px;
+}
+
+#send{
+    position: relative;
+    left: 15%;
+    top: 15%;
+    border-radius: 20px;
+    color: aliceblue;
+    background-color: blueviolet;
+    width: 100px;
+    height: 30px;
+}
+
