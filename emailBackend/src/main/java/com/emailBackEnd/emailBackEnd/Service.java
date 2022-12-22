@@ -1,4 +1,4 @@
-package com.emailBackEnd.emailBackEnd;
+package com.EmailBackEnd.EmailBackEnd;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +53,7 @@ public class Service {
         if (all == null)
             return true;
         for (int i = 0; i < all.size(); i++) {
-            if (all.get(i).getName().equals(name))
+            if (all.get(i).getEmail().equals(name))
                 return false;
         }
         return true;
@@ -130,6 +130,7 @@ public class Service {
 
     public static void sentOfTheSender(Message message) {
         try {
+            String s = message.getFrom();
             messages = getJasonMessageList(message.getFrom(), "sent");
             messages.add(message);
             ObjectMapper OM = new ObjectMapper();
