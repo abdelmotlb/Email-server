@@ -1,0 +1,102 @@
+.addContact{
+    
+        bottom: 660px;
+        right: 75px;
+        border:2px solid black;
+        border-radius: 20px;
+        z-index: 4;
+        width: 550px;
+        display: none;
+        position: fixed;
+        top: 100px;
+        background-color: aliceblue;
+    
+   
+}
+
+
+.formButton{
+    width: 100px;
+    height: 50px;
+    left: 60%;
+    border-radius: 30px;
+    margin-left: 20px;
+
+}
+.formButton:hover{
+    background-color: lightsteelblue;
+}
+.createButton:hover{
+    background-color: rgb(72, 190, 104);
+}
+
+.createButton{
+    width: 220px;
+    height: 50px;
+    left: 60%;
+    border-radius: 30px;
+    margin-left: 20px;
+}
+
+.editButton:hover{
+    background-color: rgb(215, 231, 31);
+}
+
+.editButton{
+    width: 220px;
+    height: 50px;
+    left: 60%;
+    border-radius: 30px;
+    margin-left: 20px;
+}
+
+
+
+.ContactsContainer{
+    
+    width: 50%;
+    
+}
+
+.contactsButtons{
+    border-color: black;
+}
+
+.headers{
+    border: 2px;
+    background-color: black;
+    border-radius: 20px;
+}
+
+.deleteButton:hover{
+    background-color: rgb(216, 81, 81);
+}
+
+.td {
+    width: 150px;
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+  }
+
+  .th {
+    width: 150px;
+    text-align: center;
+    border: 1px solid black;
+    padding: 5px;
+    font-size: 30px;
+  }
+
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+  }
+
+.deleteButton{
+    width: 220px;
+    height: 50px;
+    left: 60%;
+    border-radius: 30px;
+    margin-left: 20px;
+    margin-bottom: 50px;
+}

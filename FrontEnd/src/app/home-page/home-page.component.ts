@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Route, Router } from '@angular/router';
 import { ComposeComponent } from './compose/compose.component';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,7 +11,7 @@ import { ComposeComponent } from './compose/compose.component';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private router: Router, private dialogObj: MatDialog) { }
+  constructor(private router: Router, private dialogObj: MatDialog, private home: HomeService) { }
 
   ngOnInit(): void {
   }
@@ -43,6 +44,11 @@ export class HomePageComponent implements OnInit {
 
   gotoContacts(){
     this.router.navigate(['/home/contacts']);
+  }
+
+  signOut(){
+    this.router.navigate(['']);
+    this.home.signOut().subscribe();
   }
 }
 

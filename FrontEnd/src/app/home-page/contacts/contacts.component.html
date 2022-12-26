@@ -1,5 +1,50 @@
-<div>
-    <button id = "add" value = "add" (click) = "add()" >Add</button>
-    <button click="editContact()">Edit</button>
-    <button click="deleteContact();">Delete</button>
+<div class="contactsButtons" style="width: 70%;">
+    <button class="createButton" id = "add" value = "add" (click) = "add()" >Add</button>
+    <button  class="editButton" click="editContact()">Edit</button>
+    <button  class="deleteButton" click="deleteContact();">Delete</button>
+    <button class="createButton" id="display" (click) = "display()" >Show Contacts</button>
+</div>
+
+<div class="ContactsContainer">
+
+    <table class="table">
+        <thead>
+            <tr class="td">
+                <th class="th" >
+                    Name
+                </th>
+                <th  class="th">
+                    Emails
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of dis">
+                <td style="font-size:30px;">
+                    {{data.username}}
+                </td>
+                <td style="font-size:30px;">
+                    {{data.emails}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+
+<div class = "addContact" id= "addForm">
+    <table>
+     <label style="margin-left: 20px;font-size: 25px;margin-top: 50px;padding: 10px;" >Contact Name</label>
+    <input style="width: 300px;margin-right: 20px;" type="text" id="username" required  >
+    <tr></tr>
+    <label style="margin-left: 20px;font-size: 25px;margin-top: 50px;padding: 10px;">Email Address</label>
+    <input style="width: 300px;margin-right: 20px;" type="text" id="email" required >
+    <tr></tr>
+    <button style="margin-left: 170px;margin-top: 50px;" class="createButton" (click) = "addContactForm();display()" >Create New Contact</button>
+    <button style="margin-left: 170px;margin-top: 20px;" class="createButton" (click) = "addEmailForm();display()" >Add email</button>
+    </table>
+    
+</div>
 </div>

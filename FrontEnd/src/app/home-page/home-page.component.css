@@ -101,6 +101,22 @@
     color: rgb(0, 0, 0);
     font-size: 25px;
 }
+
+.signOut{
+    background-color: rgb(157, 17, 17);
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+
+.signOut:hover{
+    background-color: coral;
+}
+
+
 .button :hover {
     background-color: rgb(255, 0, 0);
 }

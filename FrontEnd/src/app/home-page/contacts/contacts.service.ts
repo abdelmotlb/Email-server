@@ -14,8 +14,17 @@ export class ContactsService {
    USERNAME = LoginComponent.USERNAME 
 
 
-   addContact(contact : IContact) :Observable<String> { 
-    return this.http.post("http://localhost:9090/add?username=" + "Ahmed", contact, {responseType:'text'});
+   addContact(email : string , username : string) :Observable<String> { 
+    return this.http.post("http://localhost:9090/add?username=" + username , email, {responseType:'text'});
+   }
+
+   addEmail(email: string, username : string) :Observable<String> {
+    return this.http.post("http://localhost:9090/addEmail?username=" + username , email, {responseType:'text'})
+   }
+
+   display() :Observable<IContact[]> {
+    console.log(this.USERNAME)
+    return this.http.post<IContact[]>("http://localhost:9090/display","Ahmed")
    }
  
 

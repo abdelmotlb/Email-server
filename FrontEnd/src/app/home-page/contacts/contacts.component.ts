@@ -20,21 +20,43 @@ export class Contact implements IContact{
 
 var contact:IContact 
 
+
 @Component({
   selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
 export class ContactsComponent {
-
+  username = ""
+  email = ""
+  temp:any
+  dis:any
+  
   constructor(private cnt:ContactsService) { }
 
     add(){
-    console.log("IN ADD")
-    var username = "test4";
-    var emails = ["test5", "test6"]
-    var contact:IContact = new Contact(username, emails)
-    this.cnt.addContact(contact).subscribe((res:any) => {alert(res)})
+    document.getElementById("addForm")!.style.display = "block"
+     
+  }
+
+  addContactForm(){
+    this.username = (<HTMLInputElement>document.getElementById("username")).value;
+     this.email = (<HTMLInputElement>document.getElementById("email")).value;
+     console.log(this.username)
+    this.cnt.addContact(this.email, this.username).subscribe((res:any) => {alert(res)})
+  }
+
+  addEmailForm(){
+     this.username = (<HTMLInputElement>document.getElementById("username")).value;
+     this.email = (<HTMLInputElement>document.getElementById("email")).value;
+     this.cnt.addEmail(this.email, this.username).subscribe((res:any) => {alert(res)})
+  }
+
+  display(){
+    this.cnt.display().subscribe((res : IContact[]) => {this.dis = res, this.print(this.dis)});
+  }
+  print(test:any){
+    console.log(this.dis)
   }
 
 }

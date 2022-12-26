@@ -11,4 +11,8 @@ export class HomeService {
   addContact(contact : object){
     return this.http.post("http//localhost:9090/addContact", contact);
   }
+
+  signOut(){
+    return this.http.post("http://localhost:9090/signOut", "signOut");
+  }
 }

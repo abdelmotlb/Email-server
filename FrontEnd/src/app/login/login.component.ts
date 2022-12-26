@@ -8,22 +8,22 @@ import { LoginService } from './login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  static USERNAME: any;
 
 	constructor(private logInService: LoginService, private router: Router ) { }
 
 	userName: string = "";
 	password: string = "";
 	userData: string = "";
-	public static USERNAME = "";
+	
 
 	setPass(gotPass: string){ this.password = gotPass; }
 	setUserName(gotUserName: string){ this.userName = gotUserName; }
-
+    USERNAME = this.userName
 	ngOnInit(): void {
 	}
 
-	//public variable of the Username to be used later 
-	USERNAME = this.userName;
+	
 
 
 	login(){
