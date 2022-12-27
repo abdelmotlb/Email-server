@@ -1,10 +1,14 @@
 package com.emailBackEnd.emailBackEnd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Message {
     private String from;
     private String to;
     private String subject;
     private String message;
+    private ArrayList<String> attachment = new ArrayList<String>();
 
     public String getFrom() {
         return from;
@@ -20,6 +24,14 @@ public class Message {
 
     public String getMessage() {
         return message;
+    }
+
+    public List<String> getAttachment() {
+        return attachment;
+    }
+
+    public void addAttachment(String attachName) {
+        this.attachment.add(attachName);
     }
 
     private Message(messageBuilder m) {

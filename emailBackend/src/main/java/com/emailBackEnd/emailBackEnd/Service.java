@@ -49,6 +49,7 @@ public class Service {
 
     // checks if the entered name is not used
     public static boolean isValidName(String name) {
+        System.out.println("in isValid");
         all = getJasonList("allUsers.json");
         if (all == null)
             return true;
