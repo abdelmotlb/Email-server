@@ -1,0 +1,14 @@
+[
+    {
+        "from": "ahmed",
+        "to": "hesham",
+        "subject": "test ",
+        "message": "message date and id",
+        "attachment": [
+            "1672568839869$Exercise 3.1.docx",
+            "1672568839879$Exercise 3.2.docx"
+        ],
+        "date": "01-01-2023 12:27:19",
+        "id": 1672568839816
+    }
+]
