@@ -1,0 +1,210 @@
+<div class="bg-image" 
+    style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/full%20page/img(11).webp');
+    height: 100vh;
+    ">
+</div>
+
+<!-- toolbar and navigation bar -->
+<div class="container">
+    <div class="row" id="allOverRow">
+        
+        <!-- toolBar -->
+        <div class="col-2 my-3" id="toolBar">
+
+            <div form-group class="row">
+                <label for="firstname" class="text-white p-2 fs-1 text-center">
+                    <i class="fa fa-bars"></i>
+                    Menu
+                </label>
+
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="appearCompose()">
+                    <i class="fa fa-comments"></i>
+                    <i class="fa fa-paper-plane"></i>
+                    compose 
+                </button>
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="gotoInbox()">
+                    <i class="fa fa-inbox"></i>
+                    Inbox
+                    <span class="bg-dark rounded-pill text-white text-right">02</span>
+                </button>
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="gotoDraft()">
+                    <i class="fa fa-file"></i>
+                    Draft
+                    <span class="bg-dark rounded-pill text-white text-right">02</span>
+                </button>
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="gotoSent()">
+                    <i class="fa fa-paper-plane"></i>
+                    Sent
+                    <span class="bg-dark rounded-pill text-white text-right">02</span>
+                </button>
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="gotoContacts()">
+                    <i class="fa fa-address-book"></i>
+                    Contacts
+                    <span class="bg-dark rounded-pill text-white text-right">02</span>
+                </button>
+            </div>
+
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="gotoTrash()">
+                    <i class="fa fa-trash"></i>
+                    Trash
+                    <span class="bg-dark rounded-pill text-white text-right">02</span>
+                </button>
+            </div>
+<!-- ///////////////////////// -->
+            <div class="row m-3 g-0">
+                <button type="button" class="btn btn-secondary" (click)="getFolders()" data-bs-toggle="modal" data-bs-target="#foldersModal">
+                    <i class="fa fa-folder"></i>
+                    folders
+                </button>
+            </div>
+
+            <div class="row m-5 g-0">
+                <button type="button" class="btn btn-secondary " style="font-size:600%; width: 90%; border-radius: 50%">
+                    <i class="fa fa-envelope d-inline"></i>
+                </button>
+            </div>
+
+            <div class="row g-0 bg-light rounded-pill" style=" position:absolute; bottom:3%; left:5%">
+                <div class="col-3 text-center mx-3" >
+                    <i class="fa fa-envelope d-inline"></i>
+                    <span class="col d-inline mx-4">Gmail</span> 
+                </div>
+            </div>
+
+        </div>
+
+        <!-- right column -->
+        <div class="col-9 mx-3 my-3" id="rightCol">
+
+            <div class="row bg-secondary m-3 rounded-pill">
+                <div class="col-1 d-inline">
+                    <button type="button" class="btn btn-secondary bg-dark mt-2 mb-2 rounded-pill"  >
+                        <i class="fa fa-accessible-icon fs-2 text-white">&#xf2c1;</i>
+                    </button>
+                </div>
+                <div class="col-9 d-inline text-center">
+                    <label class="mt-2 fs-2 text-white">{{ getActiveuser() }}</label>
+                </div>
+                <div class="col-2 d-inline">
+                    <button type="button" class="btn btn-secondary bg-dark mt-3 mb-5 rounded-pill" (click)="signOut()" style="position: absolute; left:107%; top:3% " >
+                        <i class="fa fa-sign-out text-white fs-2"></i>
+                    </button>
+                </div>
+            </div>
+
+             <!-- data rendering -->
+            <router-outlet></router-outlet>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- folders manipulation -->
+<div class="container">
+  
+    <!-- Modal -->
+    <div class="modal fade" id="foldersModal" role="dialog">
+      <div class="modal-dialog">
+      
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> <i class="fa fa-folder mx-3 mt-3 mb-2"></i> folders you have  </h5>
+            <button type="button" class="btn-close bg-secondary rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <div class="row mx-2" *ngFor="let mes of userFolders let i = index">
+                
+                <!-- case without rename -->
+                <div class="col-8" *ngIf="renameIndicators[i] == false && !addFolderIndicator">
+                    <button type="button" class="btn btn-primary mb-3 d-inline" (click)="openSelectedFolder(i)" style="width: 85%;" data-bs-dismiss="modal" >{{mes}}</button>
+                </div>     
+                <div class="col-2" *ngIf="renameIndicators[i] == false && !addFolderIndicator">
+                    <button type="button" class="btn btn-primary mb-3 d-inline" (click)="openRenameAreaCheck(i)">  <!-- data-bs-dismiss="modal" -->
+                        <i class="fa fa-edit text-white"></i>
+                    </button>
+                </div>           
+                <div class="col-2 " *ngIf="renameIndicators[i] == false && !addFolderIndicator">
+                    <button type="button" class="btn btn-primary mb-3 d-inline"  (click)="deletedSelectedFolder(i)"> <!-- data-bs-dismiss="modal" -->
+                        <i class="fa fa-trash text-white"></i>
+                    </button>
+                </div>
+
+                <!-- case with rename -->
+                <div class="col-2 d-inline" *ngIf="renameIndicators[i] && !addFolderIndicator">
+                    <button type="button" class="btn btn-primary bg-dark mt-2 mx-1 mb-2 rounded-pill" (click)="renameIndicators[i] = !renameIndicators[i]">
+                        X
+                    </button>
+                </div>
+    
+                <div class="col-8 d-inline" *ngIf="renameIndicators[i] && !addFolderIndicator">
+                    <input class="form-control mx-3 mt-2 mb-2" id="ex2" placeholder="new name" type="text" #name (blur)="setNewName(name.value)">
+                </div>
+    
+                <div class="col-2 d-inline" *ngIf="renameIndicators[i] && !addFolderIndicator">
+                    <button type="button" class="btn btn-secondary bg-dark mt-2 mx-1 mb-2 rounded-pill" (click)="renameIndicators[i] = !renameIndicators[i]; renameConfirm(i)">
+                        Re
+                    </button>
+                </div>
+
+            </div>
+                
+        
+            <div class="row" style="margin-left: 40%;  margin-right: 40%; margin-bottom:3%" *ngIf="addFolderIndicator == false">
+                <button type="button" class="btn btn-warning px-3 rounded-pill" (click)="handlecreateFolderOp()">
+                    <i class="fs-3">+</i>
+                </button>
+            </div>
+
+            <div class="row bg-secondary m-3 rounded-pill" *ngIf="addFolderIndicator">
+
+                <div class="col-2 d-inline">
+                    <button type="button" class="btn btn-primary bg-dark mt-2 mx-1 mb-2 rounded-pill" (click)="addFolderIndicator = false">
+                        X
+                    </button>
+                </div>
+    
+                <div class="col-8 d-inline">
+                    <input class="form-control mx-3 mt-2 mb-2" id="ex2" placeholder="new name" type="text" #name (blur)="setNewName(name.value)">
+                </div>
+    
+                <div class="col-2 d-inline">
+                    <button type="button" class="btn btn-secondary bg-dark mt-2 mx-1 mb-2 rounded-pill" (click)="addFolderIndicator = false; createFolder()">
+                        con
+                    </button>
+                </div>
+    
+            </div>
+        </div>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-primary bg-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+</div>
+
+
+
+    
