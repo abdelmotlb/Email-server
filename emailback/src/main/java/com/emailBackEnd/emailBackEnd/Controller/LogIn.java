@@ -8,30 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.emailBackEnd.emailBackEnd.Service;
 import com.emailBackEnd.emailBackEnd.User;
+import com.emailBackEnd.emailBackEnd.UserFactory;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/")
 public class LogIn {
 
-    // public static String activeUser = "";
-
-    // sign up
-//    @PostMapping("/signUp")
-//    public boolean signUp(@RequestBody String input) {
-//
-//        String[] arr = input.split("\\$");
-//        String email = arr[0];
-//        String pass = arr[1];
-//
-//        if (Service.isValidName(email)) {
-//            Service.addUser(User.getInstance(email, pass));
-//            Service.creatUserFiles(email);
-//            // activeUser = email;
-//            return true;
-//        } else
-//            return false;
-//    }
     @PostMapping("/signUp")
     public boolean signUp(@RequestBody String input) {
         System.out.println(input);
@@ -41,14 +24,7 @@ public class LogIn {
         String fname = arr[2];
         String lname = arr[3];
         String gender = arr[4];
-
-        if (Service.isValidName(email)) {
-            Service.addUser(User.getInstance(email, pass, fname, lname, gender));
-            Service.creatUserFiles(email);
-            // activeUser = email;
-            return true;
-        } else
-            return false;
+        return new UserFactory().creatUser(email, pass, fname, lname, gender);
     }
 
     @PostMapping("/logIn")

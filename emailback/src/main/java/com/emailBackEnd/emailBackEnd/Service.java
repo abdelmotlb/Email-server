@@ -61,71 +61,11 @@ public class Service {
         return true;
     }
 
-    // add a user to all usders json file
-    public static void addUser(User newUser) {
-        try {
-            all = getJasonList("allUsers.json");
-            all.add(newUser);
-            ObjectMapper OM = new ObjectMapper();
-            FileOutputStream fos = new FileOutputStream("allUsers.json");
-            OM.writeValue(fos, all);
-        } catch (Exception e) {
-            System.out.println("not found file");
-        }
-    }
-
-    // creat user folder and in it 5 user files
-//    public static void creatUserFiles(String filename) {
-//        try {
-//            File f1 = new File("./allUsersFolders/" + filename);
-//            f1.mkdir();
-//            String path = f1.getAbsolutePath();
-//            String[] arr = {};
-//            ObjectMapper map = new ObjectMapper();
-//            FileOutputStream fos = new FileOutputStream(path + "/" + filename + "_inbox.json");
-//            map.writeValue(fos, arr);
-//            fos = new FileOutputStream(path + "/" + filename + "_sent.json");
-//            map.writeValue(fos, arr);
-//            fos = new FileOutputStream(path + "/" + filename + "_trash.json");
-//            map.writeValue(fos, arr);
-//            fos = new FileOutputStream(path + "/" + filename + "_draft.json");
-//            map.writeValue(fos, arr);
-//            fos = new FileOutputStream(path + "/" + filename + "_cntacts.json");
-//            map.writeValue(fos, arr);
-//        } catch (Exception e) {
-//            // TODO: handle exception
-//        }
-//    }
-
-    public static void creatUserFiles(String filename) {
-        try {
-            File f1 = new File("./allUsersFolders/" + filename);
-            f1.mkdir();
-            String path = f1.getAbsolutePath();
-            String[] arr = {};
-            ObjectMapper map = new ObjectMapper();
-            FileOutputStream fos = new FileOutputStream(path + "/" + filename + "_inbox.json");
-            map.writeValue(fos, arr);
-            fos = new FileOutputStream(path + "/" + filename + "_sent.json");
-            map.writeValue(fos, arr);
-            fos = new FileOutputStream(path + "/" + filename + "_trash.json");
-            map.writeValue(fos, arr);
-            fos = new FileOutputStream(path + "/" + filename + "_draft.json");
-            map.writeValue(fos, arr);
-            fos = new FileOutputStream(path + "/" + filename + "_cntacts.json");
-            map.writeValue(fos, arr);
-            fos = new FileOutputStream(path + "/" + filename + "_folders.json");
-            map.writeValue(fos, arr);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-    }
-
     // Send a message to draft of the sender
     public static String Draft(Message message) {
         try {
             messages = getJasonMessageList(message.getFrom(), "draft");
-            messages.add(message);
+            messages.add(0, message);
             ObjectMapper OM = new ObjectMapper();
             FileOutputStream fos = new FileOutputStream(
                     "allUsersFolders/" + message.getFrom() + "/" + message.getFrom() + "_" +
@@ -142,7 +82,7 @@ public class Service {
         // put the message in his inbox else say the user is not found
         try {
             messages = getJasonMessageList(message.getTo(), "inbox");
-            messages.add(message);
+            messages.add(0, message);
             ObjectMapper OM = new ObjectMapper();
             FileOutputStream fos = new FileOutputStream(
                     "allUsersFolders/" + message.getTo() + "/" + message.getTo() + "_" +
@@ -158,7 +98,7 @@ public class Service {
         try {
             String s = message.getFrom();
             messages = getJasonMessageList(message.getFrom(), "sent");
-            messages.add(message);
+            messages.add(0, message);
             ObjectMapper OM = new ObjectMapper();
             FileOutputStream fos = new FileOutputStream(
                     "allUsersFolders/" + message.getFrom() + "/" + message.getFrom() + "_" +
@@ -169,51 +109,51 @@ public class Service {
         }
     }
 
-    public static List<Message> Search(String ActiveUserName_FolderName_Search){
+    public static List<Message> Search(String ActiveUserName_FolderName_Search) {
 
         String[] SearchInfo = ActiveUserName_FolderName_Search.split("\\$");
         String ActiveUserName = SearchInfo[0];
         String FolderName = SearchInfo[1];
         String SearchTo = SearchInfo[2];
 
-        List<Message> messages = getJasonMessageList(ActiveUserName,FolderName);
+        List<Message> messages = getJasonMessageList(ActiveUserName, FolderName);
         List<Message> SearchResults = new ArrayList<Message>();
 
         for (Message message : messages) {
-            if(     message.getSubject().contains(SearchTo) ||
+            if (message.getSubject().contains(SearchTo) ||
                     message.getMessage().contains(SearchTo) ||
-                    message.getFrom().equalsIgnoreCase(SearchTo)    ||
-                    message.getTo().equalsIgnoreCase(SearchTo)      ||
-                    message.getAttachment().contains(SearchTo)
-            ){
-                SearchResults.add(message);
+                    message.getFrom().equalsIgnoreCase(SearchTo) ||
+                    message.getTo().equalsIgnoreCase(SearchTo) ||
+                    message.getAttachment().contains(SearchTo)) {
+                SearchResults.add(0, message);
             }
         }
         return SearchResults;
     }
-    // ActiveUser name is the the signed in person, Folder name the of the folder he wants to sort SortBy is sorting criteria IsAscending is obvious
+
+    // ActiveUser name is the the signed in person, Folder name the of the folder he
+    // wants to sort SortBy is sorting criteria IsAscending is obvious
     // SortBy has the arguments of Date, Sender, Reciever, Importance, Subject
-    public static List<Message> Sort(String ActiveUserName_FolderName_SortBy_IsAscending){
-        String [] SortInfo = ActiveUserName_FolderName_SortBy_IsAscending.split("\\$");
+    public static List<Message> Sort(String ActiveUserName_FolderName_SortBy_IsAscending) {
+        String[] SortInfo = ActiveUserName_FolderName_SortBy_IsAscending.split("\\$");
         String ActiveUserName = SortInfo[0];
         String FolderName = SortInfo[1];
         String SortBy = SortInfo[2];
         boolean IsAscending = SortInfo[3].equalsIgnoreCase("1");
 
-        List<Message> messages = getJasonMessageList(ActiveUserName,FolderName);
+        List<Message> messages = getJasonMessageList(ActiveUserName, FolderName);
 
-        if(SortBy.equalsIgnoreCase("Date")){
-            SortFacade.sortByDate(messages,IsAscending);
-        }else if(SortBy.equalsIgnoreCase("Sender")){ //Sender means From
-            SortFacade.sortBySender(messages,IsAscending);
-        }else if(SortBy.equalsIgnoreCase("Reciever")){ // Reciever means To
-            SortFacade.sortByReciever(messages,IsAscending);
-        }else if(SortBy.equalsIgnoreCase("Subject")){
-            SortFacade.sortBySubject(messages,IsAscending);
+        if (SortBy.equalsIgnoreCase("Date")) {
+            SortFacade.sortByDate(messages, IsAscending);
+        } else if (SortBy.equalsIgnoreCase("Sender")) { // Sender means From
+            SortFacade.sortBySender(messages, IsAscending);
+        } else if (SortBy.equalsIgnoreCase("Reciever")) { // Reciever means To
+            SortFacade.sortByReciever(messages, IsAscending);
+        } else if (SortBy.equalsIgnoreCase("Subject")) {
+            SortFacade.sortBySubject(messages, IsAscending);
         }
-        //else if(SortBy.equalsIgnoreCase("Importance"){}
+        // else if(SortBy.equalsIgnoreCase("Importance"){}
         return messages;
-
 
     }
 }

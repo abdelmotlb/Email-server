@@ -20,10 +20,12 @@ import com.emailBackEnd.emailBackEnd.Service;
 @RequestMapping("/")
 public class Compose {
     private Message message;
+    private String todraft = "";
 
     @PostMapping("/Compose")
     public String composeMessage(@RequestBody String from_to_message) {
         String[] message_part = from_to_message.split("\\$");
+        todraft = message_part[5];
         System.out.println("in compose in controller " + from_to_message + "  active: " + message_part[0]);
         message = new Message.messageBuilder()
                 .setId()
@@ -37,8 +39,8 @@ public class Compose {
         // if the message is empty the message moves to the draft of the sender
         // elif the message is not empty it moves to the sent of sender and inbox of the
         // reciever
-        if (message_part[5].equals("no")) {
-            if (message.getMessage().length() == 0) {
+        if (message_part[6].equals("no")) {
+            if (message.getMessage().length() == 0 || todraft.equals("draft")) {
                 return Service.Draft(message);
             } else {
                 // check if the user the message is sent to is available or not
@@ -75,7 +77,7 @@ public class Compose {
         // if the message is empty the message moves to the draft of the sender
         // elif the message is not empty it moves to the sent of sender and inbox of the
         // reciever
-        if (message.getMessage().length() == 0) {
+        if (message.getMessage().length() == 0 || todraft.equals("draft")) {
             return Service.Draft(message);
         } else {
             // check if the user the message is sent to is available or not

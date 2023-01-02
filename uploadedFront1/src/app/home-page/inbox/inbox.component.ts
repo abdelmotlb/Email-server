@@ -8,9 +8,9 @@ import { MessageComponent } from '../message/message.component';
 
 
 @Component({
-  selector: 'app-inbox',
-  templateUrl: './inbox.component.html',
-  styleUrls: ['./inbox.component.css']
+	selector: 'app-inbox',
+	templateUrl: './inbox.component.html',
+	styleUrls: ['./inbox.component.css']
 })
 export class InboxComponent implements OnInit {
 
@@ -19,10 +19,10 @@ export class InboxComponent implements OnInit {
 	selectedItems: boolean[] = [];
 	userFolders: string[] = [];
 	show: IMessage[] = [];
-	
 
-	getToShow(){ return HomePageComponent.toShow; }
-	getWindowUsed(){ return HomePageComponent.windowUsed; }
+
+	getToShow() { return HomePageComponent.toShow; }
+	getWindowUsed() { return HomePageComponent.windowUsed; }
 	constructor(private home: HomeService, private dialogObj: MatDialog) { }
 	ngOnInit(): void {
 
@@ -30,7 +30,7 @@ export class InboxComponent implements OnInit {
 		console.log('in inbox');
 		console.log(HomePageComponent.toShow);
 		console.log('in reset' + this.page + " " + HomePageComponent.toShow.length);
-		for (let index = 0; (this.page-1) * this.messagesPerPage + index < HomePageComponent.toShow.length ; index++) {
+		for (let index = 0; (this.page - 1) * this.messagesPerPage + index < HomePageComponent.toShow.length; index++) {
 			this.selectedItems[index] = false;
 			console.log("in reset checked" + index);
 		}
@@ -40,74 +40,76 @@ export class InboxComponent implements OnInit {
 	}
 
 	// selection functions
-	resetChecked(){
-		for (let index = 0; (this.page-1) * this.messagesPerPage + index < HomePageComponent.toShow.length ; index++) {
+	resetChecked() {
+		for (let index = 0; (this.page - 1) * this.messagesPerPage + index < HomePageComponent.toShow.length; index++) {
 			this.selectedItems[index] = false;
 			console.log("in reset checked" + index);
 		}
 	}
-	isChecked(evt: any, index: any){
+	isChecked(evt: any, index: any) {
 		this.selectedItems[index] = evt.target.checked;
 		console.log(index + " " + this.selectedItems);
 	}
 
 	// delete functions
-	collectDeleted_request(){
+	collectDeleted_request() {
 
 		let overallDeleted = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed;
 		let selectedItemsNum = 0;
 
 		// generate the string >>
-		for (let index = 0; (this.page-1) * this.messagesPerPage + index < HomePageComponent.toShow.length ; index++) {
-			if( this.selectedItems[index] ){
+		for (let index = 0; (this.page - 1) * this.messagesPerPage + index < HomePageComponent.toShow.length; index++) {
+			if (this.selectedItems[index]) {
 				console.log('in create overall deleting ' + index);
-				console.log('date ' + HomePageComponent.toShow[(this.page-1)*this.messagesPerPage+index].date);
-				overallDeleted = overallDeleted + "$" + HomePageComponent.toShow[(this.page-1)*this.messagesPerPage+index].id;
+				console.log('date ' + HomePageComponent.toShow[(this.page - 1) * this.messagesPerPage + index].date);
+				overallDeleted = overallDeleted + "$" + HomePageComponent.toShow[(this.page - 1) * this.messagesPerPage + index].id;
 				selectedItemsNum++;
 			}
 		}
 		console.log(this.selectedItems);
-		console.log('active user: ' +  LoginComponent.activeUser);
+		console.log('active user: ' + LoginComponent.activeUser);
 
 		// request if the selected items is not 0
-		if( selectedItemsNum != 0 ){
+		if (selectedItemsNum != 0) {
 			console.log("before request" + overallDeleted);
 			// request to get the array after deleting.
 			this.home.deleteSelected(overallDeleted).subscribe((res: IMessage[]) => {
 				HomePageComponent.toShow = res;
 				console.log(HomePageComponent.toShow);
-			});	
+			});
 		}
+		this.selectedItems = new Array(9).fill(false);
 
 	}
 
 	// move functions
-	getUserFolder(){
+	getUserFolder() {
 		this.home.getFolders(LoginComponent.activeUser).subscribe((res: string[]) => {
 			this.userFolders = res;
 		});
 	}
 
-	collectMoved_request(index: any){
-		let overallMoved =  LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$" +this.userFolders[index];
+	collectMoved_request(index: any) {
+		let overallMoved = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$" + this.userFolders[index];
 		let selectedItemsNum = 0;
 
-		for (let i = 0; (this.page-1) * this.messagesPerPage + i < HomePageComponent.toShow.length ; i++) {
-			if( this.selectedItems[i] ){
-				overallMoved = overallMoved + "$" + HomePageComponent.toShow[(this.page-1)*this.messagesPerPage+i].id;
+		for (let i = 0; (this.page - 1) * this.messagesPerPage + i < HomePageComponent.toShow.length; i++) {
+			if (this.selectedItems[i]) {
+				overallMoved = overallMoved + "$" + HomePageComponent.toShow[(this.page - 1) * this.messagesPerPage + i].id;
 				selectedItemsNum++;
 			}
 		}
-		
+
 
 		// request to get the array after deleting.
-		if( selectedItemsNum != 0 ){
+		if (selectedItemsNum != 0) {
 			console.log("before request" + overallMoved);
 			this.home.moveSelected(overallMoved).subscribe((res: IMessage[]) => {
 				HomePageComponent.toShow = res;
 			});
 		}
-		
+		this.selectedItems = new Array(9).fill(false);
+
 	}
 
 	// elementNum = 0;
@@ -145,28 +147,28 @@ export class InboxComponent implements OnInit {
 	// incrementNum(){ this.elementNum++; }
 
 
-	showMessage(index: any){
+	showMessage(index: any) {
 
 		console.log('in show Message');
 		console.log(this.page);
-		console.log(HomePageComponent.toShow[(this.page-1) * this.messagesPerPage + index]);
+		console.log(HomePageComponent.toShow[(this.page - 1) * this.messagesPerPage + index]);
 		console.log('i = ' + index);
-			
+
 
 		const Obj = this.dialogObj.open(MessageComponent, {
 			height: '700px',
 			width: '800px',
-			data: HomePageComponent.toShow[(this.page-1) * this.messagesPerPage + index] as IMessage
+			data: HomePageComponent.toShow[(this.page - 1) * this.messagesPerPage + index] as IMessage
 		});
 	}
 
 	searchType: string = "";
 	searchValue: string = "";
-	setSearchType(input: any){ this.searchType = input; }
+	setSearchType(input: any) { this.searchType = input; }
 	/////////////wronggg///////////////////////////////////
-	search_request(){
+	search_request() {
 		console.log('in search req ' + this.searchValue);
-		if( this.searchValue.length != 0 ){
+		if (this.searchValue.length != 0) {
 			let reqData = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$" + this.searchValue;
 			this.home.searchRequest(reqData).subscribe((res: IMessage[]) => {
 				HomePageComponent.toShow = res;
@@ -176,11 +178,11 @@ export class InboxComponent implements OnInit {
 
 	htmlOrderType: boolean = true;
 	sortType: string = "";
-	setSortType(input: any){ this.sortType = input; }
-	sort_request(){
+	setSortType(input: any) { this.sortType = input; }
+	sort_request() {
 		// zero indicate descending.
 		let reqData = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$" + this.sortType + "$";
-		if( this.htmlOrderType ){
+		if (this.htmlOrderType) {
 			reqData += "1";
 		} else {
 			reqData += "0";
@@ -190,18 +192,18 @@ export class InboxComponent implements OnInit {
 			HomePageComponent.toShow = res;
 		});
 	}
-	
+
 	subjectValue: string = "";
 	senderValue: string = "";
-	setSubjectValue(input: any){ this.subjectValue = input; }
-	setSenderValue(input: any){ this.senderValue = input; }
-	filter_request(){
-		let reqData = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$"; 
-		if( this.subjectValue.length > 0 && this.senderValue.length > 0 ){
+	setSubjectValue(input: any) { this.subjectValue = input; }
+	setSenderValue(input: any) { this.senderValue = input; }
+	filter_request() {
+		let reqData = LoginComponent.activeUser + "$" + HomePageComponent.windowUsed + "$";
+		if (this.subjectValue.length > 0 && this.senderValue.length > 0) {
 			reqData += "both" + "$" + this.subjectValue + "$" + this.senderValue;
-		} else if( this.subjectValue.length > 0 ) {
+		} else if (this.subjectValue.length > 0) {
 			reqData += "subject" + "$" + this.subjectValue + "$" + "0";
-		} else if( this.senderValue.length > 0 ) {
+		} else if (this.senderValue.length > 0) {
 			reqData += "sender" + "$" + "0" + "$" + this.senderValue;
 		} else {
 			return;

@@ -59,8 +59,6 @@ public class Show {
         return "downloaded";
     }
 
-
-
     // delete messages from any place to trash or delete forever from trash
     @PostMapping("/deleteSelected")
     public List<Message> deleteMessages(@RequestBody String idsActiveSource) {
@@ -78,9 +76,9 @@ public class Show {
 
         for (int i = 2; i < n; i++) {
             for (int j = 0; j < messageFiles.size(); j++) {
-                if (messageFiles.get(j).getId().equals( filesAndPath[i] )) {
+                if (messageFiles.get(j).getId().equals(filesAndPath[i])) {
                     if (!source.equals("trash")) {
-                        trash.add(messageFiles.get(j));
+                        trash.add(0, messageFiles.get(j));
                         messageFiles.remove(j);
                     } else
                         messageFiles.remove(j);
@@ -107,61 +105,63 @@ public class Show {
         return messageFiles;
     }
 
-//    @PostMapping("/MovetoFolder")
-//    public void moveToFolder(@RequestBody String filesActiveSourceDest) {
-//        // public void moveToFolder(@RequestBody String filesActiveSourceDest) {
-//        String[] files = filesActiveSourceDest.split("\\$");
-//        int n = files.length;
-//        String active = files[0];
-//        String source = files[1];
-//        String destination = files[2];
-//        List<Message> messageFiles = Service.getJasonMessageList(active, source);
-//        List<Message> newFolderMessages = Service.getJasonMessageList(active, destination);
-//        for (int i = 3; i < n; i++) {
-//            for (int j = 0; j < messageFiles.size(); j++) {
-//                if (messageFiles.get(j).getId().equals( files[i] )) {
-//                    newFolderMessages.add(messageFiles.get(j));
-//                    messageFiles.remove(j);
-//                }
-//            }
-//        }
-//        ObjectMapper OM = new ObjectMapper();
-//        FileOutputStream dest, src;
-//        try {
-//
-//            dest = new FileOutputStream("allUsersFolders/" + active + "/" + active + "_" + destination
-//                    + ".json");
-//            src = new FileOutputStream(
-//                    "allUsersFolders/" + active + "/" + active + "_"
-//                            + source + ".json");
-//            OM.writeValue(src, messageFiles);
-//            OM.writeValue(dest, newFolderMessages);
-//
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    @PostMapping("/CreatFolder")
-//    public void creatFolder(String userAndFile) {
-//        String[] twoParam = userAndFile.split("\\$");
-//        String active = twoParam[0];
-//        String name = twoParam[1];
-//        String[] arr = {};
-//        ObjectMapper map = new ObjectMapper();
-//        FileOutputStream fos;
-//        try {
-//            fos = new FileOutputStream("./AllUsersFolders/" + active + "/" + active + "_" + name + ".json");
-//            map.writeValue(fos, arr);
-//        } catch (IOException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//
-//    }
-
+    // @PostMapping("/MovetoFolder")
+    // public void moveToFolder(@RequestBody String filesActiveSourceDest) {
+    // // public void moveToFolder(@RequestBody String filesActiveSourceDest) {
+    // String[] files = filesActiveSourceDest.split("\\$");
+    // int n = files.length;
+    // String active = files[0];
+    // String source = files[1];
+    // String destination = files[2];
+    // List<Message> messageFiles = Service.getJasonMessageList(active, source);
+    // List<Message> newFolderMessages = Service.getJasonMessageList(active,
+    // destination);
+    // for (int i = 3; i < n; i++) {
+    // for (int j = 0; j < messageFiles.size(); j++) {
+    // if (messageFiles.get(j).getId().equals( files[i] )) {
+    // newFolderMessages.add(messageFiles.get(j));
+    // messageFiles.remove(j);
+    // }
+    // }
+    // }
+    // ObjectMapper OM = new ObjectMapper();
+    // FileOutputStream dest, src;
+    // try {
+    //
+    // dest = new FileOutputStream("allUsersFolders/" + active + "/" + active + "_"
+    // + destination
+    // + ".json");
+    // src = new FileOutputStream(
+    // "allUsersFolders/" + active + "/" + active + "_"
+    // + source + ".json");
+    // OM.writeValue(src, messageFiles);
+    // OM.writeValue(dest, newFolderMessages);
+    //
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    //
+    // }
+    //
+    // @PostMapping("/CreatFolder")
+    // public void creatFolder(String userAndFile) {
+    // String[] twoParam = userAndFile.split("\\$");
+    // String active = twoParam[0];
+    // String name = twoParam[1];
+    // String[] arr = {};
+    // ObjectMapper map = new ObjectMapper();
+    // FileOutputStream fos;
+    // try {
+    // fos = new FileOutputStream("./AllUsersFolders/" + active + "/" + active + "_"
+    // + name + ".json");
+    // map.writeValue(fos, arr);
+    // } catch (IOException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
+    //
+    // }
 
     @PostMapping("/createFolder")
     public List<String> creatFolder(@RequestBody String userAndFile) {
@@ -175,7 +175,7 @@ public class Show {
         List<String> foldersNames = getFoldersNames(active);
         if (foldersNames.contains(name))
             return foldersNames;
-        foldersNames.add(name);
+        foldersNames.add(0, name);
         try {
             fos = new FileOutputStream("./AllUsersFolders/" + active + "/" + active + "_" + name + ".json");
             map.writeValue(fos, arr);
@@ -276,7 +276,7 @@ public class Show {
         for (int i = 3; i < n; i++) {
             for (int j = 0; j < messageFiles.size(); j++) {
                 if (messageFiles.get(j).getId().equals(files[i])) {
-                    newFolderMessages.add(messageFiles.get(j));
+                    newFolderMessages.add(0, messageFiles.get(j));
                     messageFiles.remove(j);
                 }
             }

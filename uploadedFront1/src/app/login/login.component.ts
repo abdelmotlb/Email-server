@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
 	// login input data
 	Email: string = "";
 	password: string = "";
-	
+
 	// sign up input data
 	firstName: string = "";
 	lastName: string = "";
@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
 	// setters of got data
 	setPass(gotPass: string) { this.password = gotPass; }
 	setEmail(gotEmail: string) { this.Email = gotEmail; }
-	setFirstName(gotFirstName: string){ this.firstName = gotFirstName; }
-	setLastName(gotLastName: string){ this.lastName = gotLastName; }
+	setFirstName(gotFirstName: string) { this.firstName = gotFirstName; }
+	setLastName(gotLastName: string) { this.lastName = gotLastName; }
 
 	// activeUser = this.Email
 	ngOnInit(): void {
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
 	signUpFn() {
 
-		if( this.genderIndicator == false){
+		if (this.genderIndicator == false) {
 			this.gender = "Female";
 		}
 
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 				console.log('successful sign up');
 				this.router.navigate(['/home']);
 			} else {
-				alert('can not sign up');
+				alert('this e-mail already exist sign in using it or sign up by different e-mail');
 			}
 		});
 	}

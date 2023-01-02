@@ -38,7 +38,7 @@ export class ComposeComponent implements OnInit {
     // console.log(this.data[0].name);
   }
 
-  sendMessage() {
+  sendMessage(toTrash: any) {
 
     var valid = true;
     const formData = new FormData();
@@ -62,7 +62,7 @@ export class ComposeComponent implements OnInit {
         this.thereAttach = "yes";
         //all message parts except attachment request
         console.log(this.reciver + " " + this.subject + " " + this.message + " " + this.priorty)
-        this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + this.thereAttach).subscribe((res: any) => {
+        this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + toTrash + "$" + this.thereAttach).subscribe((res: any) => {
           console.log("compose " + res);
         });
         //attachment request
@@ -72,7 +72,7 @@ export class ComposeComponent implements OnInit {
       } else {
         //all message parts except attachment request
         console.log(this.reciver + " " + this.subject + " " + this.message)
-        this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + this.thereAttach).subscribe((res: any) => {
+        this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + toTrash + "$" + this.thereAttach).subscribe((res: any) => {
           console.log("compose " + res);
         });
       }
