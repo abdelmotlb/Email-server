@@ -1,0 +1,119 @@
+<div class="bg-image" style="background-image: url('https://mdbootstrap.com/img/Photos/Horizontal/Nature/full%20page/img(11).webp');
+    height: 100vh">
+</div>
+<div class="container" *ngIf="login" id="loginContainer">
+	<div class="row border border-secondary" id="allDataLogin">
+		<div class="col" id="formPart">
+			<form id="formPocket">
+				<!-- hello -->
+				<div form-group class="row" id="helloLabel">
+					<div class="col mb-3 p-2 text-center">
+						<span class="fs-1"> Hello! </span>
+					</div>
+				</div>
+				<!-- register -->
+				<div form-group class="row g-0">
+					<div class="col m-3 p-2 text-center" style="border-radius: 20px;">
+						<span class="fs-4"> Use your Account </span>
+					</div>
+				</div>
+				<!-- email -->
+				<div form-group class="row g-0 needs-validation">
+					<div class="col mb-3 mx-3">
+						<label for="" class="form-label">Email address</label>
+						<input type="text" class="form-control" placeholder="enter email address" #email
+							(blur)="setEmail(email.value)" required>
+					</div>
+				</div>
+				<!-- password -->
+				<div form-group class="row g-0">
+					<div class="col mb-3 mx-3 needs-validation">
+						<label for="" class="form-label">password</label>
+						<input type="password" class="form-control" placeholder="enter password" #password
+							(blur)="setPass(password.value)" required>
+					</div>
+				</div>
+				<!-- switch -->
+				<div form-group class="row g-0 m-3 text-center">
+					<a href="" (click)="login = false"> go to sign up</a>
+				</div>
+				<div form-group class="row g-0 text-center" id="logInBtn">
+					<button class="btn mt-3 btn-primary" (click)="signInFn()">Log in</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!--////////////////////////////////////////////////////// -->
+<div class="container" *ngIf="!login" id="signUpContainer">
+	<div class="row" id="allDataSignUp">
+		<div class="col" id="formPart">
+			<form id="formPocket">
+				<!-- register -->
+				<div form-group class="row g-0">
+					<div class="col m-3 p-2 text-center" style="border-radius: 20px;">
+						<span class="fs-1"> create Account </span>
+					</div>
+				</div>
+				<!-- first name and last name -->
+				<div form-group class="row">
+					<div class="col mb-3 mx-3 p-2 form-outline">
+						<label for="firstname" class="form-label">first name</label>
+						<input type="text" class="form-control" id="firstname" #firstName
+							(blur)="setFirstName(firstName.value)">
+					</div>
+					<div class="col mb-3 mx-3 p-2">
+						<label for="" class="form-label">last name</label>
+						<input type="text" class="form-control" #lastName (blur)="setLastName(lastName.value)">
+					</div>
+				</div>
+				<!-- email -->
+				<div form-group class="row g-0">
+					<div class="col mb-3 mx-3">
+						<label for="" class="form-label">Email address</label>
+						<input type="email" class="form-control" #email (blur)="setEmail(email.value)">
+					</div>
+				</div>
+				<!-- gender -->
+				<div form-group class="row g-0">
+					<div class="col mb-3 mx-3">
+						<span class="m-3 inline">Gender</span>
+						<div class="form-check-inline">
+							<input class="form-check-input" type="radio" name="flexRadioDefault" id="male" checked
+								(change)=" genderIndicator = !genderIndicator">
+							<label class="form-check-label" for="male"> Male </label>
+						</div>
+						<div class="form-check-inline">
+							<input class="form-check-input" type="radio" name="flexRadioDefault" id="female"
+								ng-model='gender' value="female" (change)=" genderIndicator = !genderIndicator">
+							<label class="form-check-label" for="female"> Female </label>
+						</div>
+					</div>
+				</div>
+				<!-- password -->
+				<div form-group class="row g-0">
+					<div class="col mb-3 mx-3">
+						<label for="" class="form-label">password</label>
+						<input type="password" class="form-control" #password (blur)="setPass(password.value)">
+					</div>
+				</div>
+				<!-- switch -->
+				<div form-group class="row g-0 text-center">
+					<a href="" (click)="login = true"> go to log in</a>
+				</div>
+				<div form-group class="row g-0 text-center" id="signUpBtn">
+					<button class="btn mt-3 btn-primary" (click)="signUpFn()">sign up</button>
+				</div>
+			</form>
+		</div>
+		<!-- label and discription -->
+		<div class="col bg-primary" id="labelPart">
+			<div class="row">
+				<div class="fs-2 text-md"> welcome Back </div>
+			</div>
+			<div class="row">
+				<div class="fs-5 text-md"> glad to see you </div>
+			</div>
+		</div>
+	</div>
+</div>
