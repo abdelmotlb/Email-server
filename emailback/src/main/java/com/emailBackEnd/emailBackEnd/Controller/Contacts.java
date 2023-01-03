@@ -9,12 +9,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+
 import java.util.*;
 
 import com.emailBackEnd.emailBackEnd.Contact;
 import com.emailBackEnd.emailBackEnd.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -307,46 +309,46 @@ public class Contacts {
         System.out.println(contacts.size());
     }
 
+
     @PostMapping("/get")
     public List<Contact> get(String active) {
         contacts = readContacts(active);
         return contacts;
     }
 
-    @PostMapping("/sort") // sorting is a string containng first letter A or D + $ + active user
-    public List<Contact> sort(@RequestBody String sorting) {
+    @PostMapping("/sort") //sorting is a string containng first letter A or D + $ + active user
+    public List<Contact> sort(@RequestBody String sorting){
         String[] twoParams = sorting.split("\\$");
         String sort = twoParams[0];
         String username = twoParams[1];
         contacts = readContacts(username);
-        if (sort.equals("A")) {
-            Collections.sort(contacts, new Comparator<Contact>() {
-                @Override
+        if(sort.equals("A")){
+        Collections.sort(contacts, new Comparator<Contact>(){
+            @Override
                 public int compare(Contact c1, Contact c2) {
                     return c1.getUsername().compareTo(c2.getUsername());
                 }
-            });
-        } else {
-            Collections.sort(contacts, new Comparator<Contact>() {
+        });}else{
+            Collections.sort(contacts, new Comparator<Contact>(){
                 @Override
-                public int compare(Contact c1, Contact c2) {
-                    return c2.getUsername().compareTo(c1.getUsername());
-                }
+                    public int compare(Contact c1, Contact c2) {
+                        return c2.getUsername().compareTo(c1.getUsername());
+                    }
             });
         }
         return contacts;
     }
 
-    @PostMapping("/search") // searchString = activeUser + username to be searched
-    public List<Contact> search(@RequestBody String searchString) {
+    @PostMapping("/search") //searchString = activeUser + username to be searched
+    public List<Contact> search(@RequestBody String searchString){
         String[] twoParam = searchString.split("\\$");
         String username = twoParam[0];
         String toSearch = twoParam[1];
         contacts = readContacts(username);
         List<Contact> searchResults = new ArrayList<Contact>();
-        for (Contact contact : contacts) {
-            if (contact.getUsername().contains(toSearch)) {
-                searchResults.add(contact);
+        for(Contact contact : contacts){
+            if(contact.getUsername().contains(toSearch)){
+               searchResults.add(contact);
             }
         }
         return searchResults;
