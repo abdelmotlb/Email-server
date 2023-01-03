@@ -37,6 +37,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	signInFn() {
+		if (this.Email.length < 3 || this.password.length < 3) {
+			alert("Please fill all fields with not less than 3 charecters");
+			return;
+		}
 		this.userData = this.Email + "$" + this.password;
 		console.log(this.userData);
 		this.logInService.logIn(this.userData).subscribe((loginMessage: any) => {
@@ -51,6 +55,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	signUpFn() {
+		if (this.Email.length < 3 || this.password.length < 3 || this.firstName.length < 3 || this.lastName.length < 3) {
+			alert("Please fill all fields with not less than 3 charecters");
+			return;
+		}
 
 		if (this.genderIndicator == false) {
 			this.gender = "Female";

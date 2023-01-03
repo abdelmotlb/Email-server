@@ -18,9 +18,9 @@ export interface IMessage {
 }
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+	selector: 'app-home-page',
+	templateUrl: './home-page.component.html',
+	styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
 
@@ -35,31 +35,35 @@ export class HomePageComponent implements OnInit {
 	addFolderIndicator: boolean = false;
 	static toShow: IMessage[] = [];
 
-	setNewName(got: string){ this.newName = got; }
-  	constructor(private router: Router, private dialogObj: MatDialog, private home: HomeService) { }
+	setNewName(got: string) { this.newName = got; }
+	constructor(private router: Router, private dialogObj: MatDialog, private home: HomeService) { }
 
 	ngOnInit(): void {
 		console.log('in ng on it for home');
-		if( LoginComponent.activeUser == "" ){
+		if (LoginComponent.activeUser == "") {
 			this.router.navigate(['']);
 		}
 	}
 
-	getActiveuser(){ return LoginComponent.activeUser; }
+	getActiveuser() { return LoginComponent.activeUser; }
 
 	// nagivation functions
 	appearCompose() {
 		const Obj = this.dialogObj.open(ComposeComponent, {
-		height: '700px',
-		width: '800px'
+			height: '700px',
+			width: '800px'
 		});
 	}
 
-	
+	getwindowUsed() {
+		return HomePageComponent.windowUsed
+	}
+
+
 
 	gotoInbox() {
 		HomePageComponent.windowUsed = "inbox";
-		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => { 
+		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => {
 			HomePageComponent.toShow = res;
 			this.router.navigate(['/home/inbox']);
 		});
@@ -68,7 +72,7 @@ export class HomePageComponent implements OnInit {
 
 	gotoDraft() {
 		HomePageComponent.windowUsed = "draft";
-		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => { 
+		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => {
 			HomePageComponent.toShow = res;
 			this.router.navigate(['/home/inbox']);
 		});
@@ -76,7 +80,7 @@ export class HomePageComponent implements OnInit {
 
 	gotoTrash() {
 		HomePageComponent.windowUsed = "trash";
-		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => { 
+		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => {
 			HomePageComponent.toShow = res;
 			this.router.navigate(['/home/inbox']);
 		});
@@ -84,11 +88,11 @@ export class HomePageComponent implements OnInit {
 
 	gotoSent() {
 		HomePageComponent.windowUsed = "sent";
-		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => { 
+		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => {
 			HomePageComponent.toShow = res;
 			this.router.navigate(['/home/inbox']);
 		});
-		
+
 	}
 
 	gotoContacts() {
@@ -96,94 +100,94 @@ export class HomePageComponent implements OnInit {
 	}
 
 	// folder operations
-	printcounter(index: any){
+	printcounter(index: any) {
 		console.log(index);
 	}
 
-	getFolders(){
+	getFolders() {
 		this.home.getFolders(LoginComponent.activeUser).subscribe((res: string[]) => {
 			this.userFolders = res;
-			this.renameIndicators = new Array( res.length ).fill(false);
+			this.renameIndicators = new Array(res.length).fill(false);
 		});
 	}
 
 	// open
-	openSelectedFolder(index: any){
+	openSelectedFolder(index: any) {
 		HomePageComponent.windowUsed = this.userFolders[index];
-		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => { 
+		this.home.getMessages(HomePageComponent.windowUsed).subscribe((res: IMessage[]) => {
 			HomePageComponent.toShow = res;
 			this.router.navigate(['/home/inbox']);
 		});
 	}
 
-	resetChecked(){
-		for (let index = 0; index < this.renameIndicators.length ; index++) {
+	resetChecked() {
+		for (let index = 0; index < this.renameIndicators.length; index++) {
 			this.renameIndicators[index] = false;
 			console.log("in reset checked" + index);
 		}
 	}
 
 	// deleted
-	deletedSelectedFolder(index: any){
+	deletedSelectedFolder(index: any) {
 		this.resetChecked();
 		let selectedFolderInfo = LoginComponent.activeUser + "$" + this.userFolders[index];
-		this.home.deleteFolder( selectedFolderInfo ).subscribe((res: string[]) => {
+		this.home.deleteFolder(selectedFolderInfo).subscribe((res: string[]) => {
 			this.userFolders = res;
-			this.renameIndicators = new Array( res.length ).fill(false);
+			this.renameIndicators = new Array(res.length).fill(false);
 		});
 	}
 
-	openRenameAreaCheck(index: any){
+	openRenameAreaCheck(index: any) {
 		let oneFolderRenaming = 0;
 		for (let i = 0; i < this.renameIndicators.length; i++) {
-			if( this.renameIndicators[i] ){
+			if (this.renameIndicators[i]) {
 				oneFolderRenaming++;
 				break;
 			}
 		}
-		if( oneFolderRenaming == 0 ){
+		if (oneFolderRenaming == 0) {
 			this.renameIndicators[index] = true;
-		} 
+		}
 	}
 
-	handlecreateFolderOp(){
+	handlecreateFolderOp() {
 		let oneFolderRenaming = 0;
 		for (let i = 0; i < this.renameIndicators.length; i++) {
-			if( this.renameIndicators[i] ){
+			if (this.renameIndicators[i]) {
 				oneFolderRenaming++;
 				break;
 			}
 		}
-		if( oneFolderRenaming == 0 ){
+		if (oneFolderRenaming == 0) {
 			this.addFolderIndicator = true;
 		}
-	
+
 	}
-	
-	renameConfirm(index: any){
-		let selectedFolderInfo = LoginComponent.activeUser + "$" + this.userFolders[index] + "$" + this.newName; 
+
+	renameConfirm(index: any) {
+		let selectedFolderInfo = LoginComponent.activeUser + "$" + this.userFolders[index] + "$" + this.newName;
 		this.home.renameFolder(selectedFolderInfo).subscribe((res: string[]) => {
 			this.userFolders = res;
-			this.renameIndicators = new Array( res.length ).fill(false);
+			this.renameIndicators = new Array(res.length).fill(false);
 		});
 	}
 
-	createFolder(){
+	createFolder() {
 		let selectedFolderInfo = LoginComponent.activeUser + "$" + this.newName;
-		console.log(" selected in create folder " +selectedFolderInfo);
-		this.home.createFolder( selectedFolderInfo ).subscribe((res: string[]) => {
+		console.log(" selected in create folder " + selectedFolderInfo);
+		this.home.createFolder(selectedFolderInfo).subscribe((res: string[]) => {
 			this.userFolders = res;
-			this.renameIndicators = new Array( res.length ).fill(false);
+			this.renameIndicators = new Array(res.length).fill(false);
 		});
 	}
 
 	// sign out
-	signOut(){
+	signOut() {
 		LoginComponent.activeUser = "";
 		this.router.navigate(['']);
 	}
 
-	
+
 }
 
 

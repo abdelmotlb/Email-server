@@ -107,7 +107,7 @@ public class Service {
             }
         }
 
-        return "inboxOfTheReciever";
+        return "sent to " + oldmessage.getTo();
     }
 
     public static void sentOfTheSender(Message message) {
@@ -127,7 +127,7 @@ public class Service {
 
     public static List<Message> Search(String ActiveUserName_FolderName_Search) {
 
-//        String[] SearchInfo = ActiveUserName_FolderName_Search.split("\\$");
+        // String[] SearchInfo = ActiveUserName_FolderName_Search.split("\\$");
         String[] SearchInfo = StringAdapter.getInstance(ActiveUserName_FolderName_Search).getStringArraySeparated();
         String ActiveUserName = SearchInfo[0];
         String FolderName = SearchInfo[1];
@@ -137,13 +137,13 @@ public class Service {
         List<Message> SearchResults = new ArrayList<Message>();
 
         for (Message message : messages) {
-            if (    message.getSubject().contains(SearchTo)         ||
-                    message.getMessage().contains(SearchTo)         ||
-                    message.getFrom().equalsIgnoreCase(SearchTo)    ||
-                    message.getTo().equalsIgnoreCase(SearchTo)      ||
+            if (message.getSubject().contains(SearchTo) ||
+                    message.getMessage().contains(SearchTo) ||
+                    message.getFrom().equalsIgnoreCase(SearchTo) ||
+                    message.getTo().equalsIgnoreCase(SearchTo) ||
                     message.getPriorty().equalsIgnoreCase(SearchTo) ||
-                    FindInList.IsFoundInAttachments(message,SearchTo)
-//                    message.getAttachment().contains(SearchTo)
+                    FindInList.IsFoundInAttachments(message, SearchTo)
+            // message.getAttachment().contains(SearchTo)
             ) {
                 SearchResults.add(0, message);
             }
@@ -155,8 +155,10 @@ public class Service {
     // wants to sort SortBy is sorting criteria IsAscending is obvious
     // SortBy has the arguments of Date, Sender, Reciever, Importance, Subject
     public static List<Message> Sort(String ActiveUserName_FolderName_SortBy_IsAscending) {
-//        String[] SortInfo = ActiveUserName_FolderName_SortBy_IsAscending.split("\\$");
-        String[] SortInfo = StringAdapter.getInstance(ActiveUserName_FolderName_SortBy_IsAscending).getStringArraySeparated();
+        // String[] SortInfo =
+        // ActiveUserName_FolderName_SortBy_IsAscending.split("\\$");
+        String[] SortInfo = StringAdapter.getInstance(ActiveUserName_FolderName_SortBy_IsAscending)
+                .getStringArraySeparated();
         String ActiveUserName = SortInfo[0];
         String FolderName = SortInfo[1];
         String SortBy = SortInfo[2];
@@ -172,15 +174,15 @@ public class Service {
             SortFacade.sortByReciever(messages, IsAscending);
         } else if (SortBy.equalsIgnoreCase("Subject")) {
             SortFacade.sortBySubject(messages, IsAscending);
-        }
-        else if(SortBy.equalsIgnoreCase("Importance")){
-            SortFacade.sortByImportance(messages,IsAscending);
+        } else if (SortBy.equalsIgnoreCase("Importance")) {
+            SortFacade.sortByImportance(messages, IsAscending);
         }
         return messages;
 
     }
-    //This functions sorts the inbox by priority
-    public static List<Message> SortPriority(String ActiveUserName){
+
+    // This functions sorts the inbox by priority
+    public static List<Message> SortPriority(String ActiveUserName) {
         return SortFacade.SortPriority(ActiveUserName);
     }
 

@@ -63,23 +63,23 @@ export class ComposeComponent implements OnInit {
         //all message parts except attachment request
         console.log(this.reciver + " " + this.subject + " " + this.message + " " + this.priorty)
         this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + toTrash + "$" + this.thereAttach).subscribe((res: any) => {
-          console.log("compose " + res);
+          // console.log("compose " + res);
         });
         //attachment request
         this.serviceObj.sendAttachReq(formData).subscribe((res: any) => {
-          console.log(" attach " + res);
+          alert(res);
         });
       } else {
         //all message parts except attachment request
         console.log(this.reciver + " " + this.subject + " " + this.message)
         this.serviceObj.composeMessage(LoginComponent.activeUser + "$" + this.reciver + "$" + this.subject + "$" + this.message + "$" + this.priorty + "$" + toTrash + "$" + this.thereAttach).subscribe((res: any) => {
-          console.log("compose " + res);
+          alert(res);
         });
       }
 
     }
     else
-      console.log("over size")
+      alert("over size")
   }
 
   removeAttach(name: any) {
