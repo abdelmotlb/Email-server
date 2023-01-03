@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ObservableLike } from 'rxjs';
 import { LoginComponent } from 'src/app/login/login.component';
 import { Contact, IContact } from './contacts.component';
 
@@ -40,15 +40,26 @@ export class ContactsService {
     }
 
     delete(username: string) {
-        return this.http.post("http://localhost:9090/delete", username + "$" + LoginComponent.activeUser)
+        username = username+"$"+LoginComponent.activeUser
+        return this.http.delete("http://localhost:9090/delete?username=" + username, {responseType:"text"} )
     }
 
     // get() {
     //     return this.http.get<IContact[]>("http://localhost:9090/get")
     // }
     get(): Observable<IContact[]> {
-        return this.http.post<IContact[]>("http://localhost:9090/delete", LoginComponent.activeUser)
+        return this.http.post<IContact[]>("http://localhost:9090/get", LoginComponent.activeUser)
     }
 
+    sort(sorting : string) :Observable<IContact[]>{
+        var toSort = sorting + "$" + LoginComponent.activeUser
+        return this.http.post<IContact[]>("http://localhost:9090/sort", toSort)
+    } 
+
+    search(contact : string) :Observable<IContact[]>{
+        var toSearch = LoginComponent.activeUser + "$" + contact
+        return this.http.post<IContact[]>("http://localhost:9090/search", toSearch)
+
+    }
 
 }

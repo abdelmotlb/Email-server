@@ -30,20 +30,25 @@ export class Contact implements IContact{
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
-export class ContactsComponent {
+export class ContactsComponent implements OnInit {
   username = ""
   email = ""
   temp:any
   dis:any
   editFlag = false
+  searchValue:any
   
 
   
   constructor(private cnt:ContactsService) { }
 
-  add(){
+    add(){
     document.getElementById("addForm")!.style.display = "block"
      
+  }
+
+  ngOnInit() :void{
+    this.display()
   }
 
   addContactForm(){
@@ -62,11 +67,7 @@ export class ContactsComponent {
   }
 
   display(){
-    this.cnt.display().subscribe((res : IContact[]) => {
-      this.dis = res,
-      this.print(this.dis)
-      if( this.dis.length == 0 ){ alert("you don't have any contact to show!") }
-    });
+    this.cnt.display().subscribe((res : IContact[]) => {this.dis = res, this.print(this.dis)});
   }
   print(test:any){
     console.log(this.dis)
@@ -99,10 +100,23 @@ export class ContactsComponent {
   delete(username : string){
     console.log(username)
     this.cnt.delete(username).subscribe()
-    this.display()
+    //this.cnt.display().subscribe((res : IContact[]) => {this.dis = res, this.print(this.dis)});
     
   }
 
-  
+  close(){
+    document.getElementById("addForm")!.style.display = "none"
+  }
+
+  sortA(){
+    this.cnt.sort("A").subscribe((res : IContact[]) => {this.dis = res, this.print(this.dis)})
+  }
+
+  sortD(){
+    this.cnt.sort("D").subscribe((res : IContact[]) => {this.dis = res, this.print(this.dis)})
+  }
+  searchh(){
+    this.cnt.search(this.searchValue).subscribe((res : any) => {this.dis = res, this.print(this.dis)})
+  }
 
 }

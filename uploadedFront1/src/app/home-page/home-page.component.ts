@@ -50,7 +50,7 @@ export class HomePageComponent implements OnInit {
 	// nagivation functions
 	appearCompose() {
 		const Obj = this.dialogObj.open(ComposeComponent, {
-		height: '600px',
+		height: '700px',
 		width: '800px'
 		});
 	}
